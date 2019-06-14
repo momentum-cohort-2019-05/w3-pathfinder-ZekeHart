@@ -8,8 +8,8 @@ total_diff = stats(map_file)
 ele_range = total_diff.get_range()
 # print(ele_range)
 # print(min(map_file))
-map_lines_file = MapData("elevation_small.txt").readlines_file()
-# print(map_lines_file)
+map_lines_file = MapData("elevation_large.txt").readlines_file()
+# print(len(map_lines_file))
 
 fill_value_list = []
 for line in map_lines_file:
@@ -29,15 +29,15 @@ for line in fill_value_list:
 
 # print(divided_list)
 
-max_list = []
-min_list = []
-for line in divided_list:
-    max_list.append(max(line))
-    min_list.append(min(line))
-print(divided_list)
+# max_list = []
+# min_list = []
+# for line in divided_list:
+#     max_list.append(max(line))
+#     min_list.append(min(line))
+# # print(divided_list)
 
-print(max(max_list))
-print(min(min_list))
+# # print(max(max_list))
+# # print(min(min_list))
 
 
 # _int = 4561
@@ -60,7 +60,25 @@ print(min(min_list))
 # _____
 
 
-blank_map = Image.new('RGBA', (600, 600), 'white')
+# blank_map = Image.new('RGBA', (600, 600), 'white')
+# blank_map.save('test_map.png')
+# draw_test = ImageDraw.Draw(blank_map)
+# y = 0
+# for line in divided_list:
+#     x = 0
+#     for _int in line:
+       
+#         draw_test.point((x,y),fill=(_int, _int, _int))
+#         x += 1
+#     y += 1
+# # breakpoint()
+# blank_map.show()
+# print("done")
+
+
+
+
+blank_map = Image.new('RGB', (600, 600), 'white')
 blank_map.save('test_map.png')
 draw_test = ImageDraw.Draw(blank_map)
 y = 0
@@ -68,17 +86,27 @@ for line in divided_list:
     x = 0
     for _int in line:
        
-        draw_test.point((x,y),fill=(_int, _int, _int))
+        draw_test.point((x,y),fill=(_int))
         x += 1
     y += 1
 # breakpoint()
+
+a = 0
+b = 300
+for a in range(600):
+    empty_list = []
+    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b-1]))
+    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b]))
+    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b+1]))
+    if empty_list.index(min(empty_list)) == 0:
+        b += 1
+    if empty_list.index(min(empty_list)) == 2:
+        b -= 1
+    draw_test.point((a,b),fill=(0,255,255))
+    
+
 blank_map.show()
 print("done")
-
-
-
-
-
 
 
 
