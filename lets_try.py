@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 from map_class import MapData
-from makeMap import stats
+# from makeMap import stats
 # import re
 # map_file = MapData("elevation_small.txt").read_file()
 # # print(max(map_file))
@@ -100,7 +100,7 @@ map_lines_file = MapData("elevation_large.txt").readlines_file()
 # # breakpoint()
 
 # # a = 0
-# # b = 200
+# # b = 00
 # # total_elevation_change = 0
 # # for a in range(600):
 # #     empty_list = []
