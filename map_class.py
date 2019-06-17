@@ -1,4 +1,5 @@
 import re
+from PIL import Image, ImageDraw
 
 class MapData:
 
@@ -53,4 +54,41 @@ class MapData:
             for _ in line:
                 line_ints.append(int(_))
             list_lines_ints.append(line_ints)
-        return list_lines_ints
+        return self.ints_to_rgb(list_lines_ints)
+
+    def ints_to_rgb(self, list_list_of_ints):
+        max_value = self.getMax(list_list_of_ints)
+        min_value = self.getMin(list_list_of_ints)
+        ele_diff = max_value - min_value
+        rgb_ints = []
+        for line in list_list_of_ints:
+            line_list = []
+            for elev  in line:
+                line_list.append(int((elev - min_value)/(ele_diff / 255)))
+            rgb_ints.append(line_list)
+        return self.draw_map_from_ints(rgb_ints)
+
+    def getMax(self, list_list_of_ints):
+        max_list = []
+        for line in list_list_of_ints:
+            max_list.append(max(line))
+        return max(max_list)
+
+    def getMin(self, list_list_of_ints):
+        min_list = []
+        for line in list_list_of_ints:
+            min_list.append(min(line))
+        return min(min_list)
+
+    def draw_map_from_ints(self, list_of_list_of_ints):
+        blank_map = Image.new('RGB', (600, 600), 'white')
+        blank_map.save('test_map.png')
+        draw_test = ImageDraw.Draw(blank_map)
+        y = 0
+        for line in list_of_list_of_ints:
+            x = 0
+            for _int in line: 
+                draw_test.point((x,y),fill=(_int, _int, _int))
+                x += 1
+            y += 1
+        blank_map.show()

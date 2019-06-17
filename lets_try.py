@@ -2,30 +2,35 @@ from PIL import Image, ImageDraw
 from map_class import MapData
 from makeMap import stats
 # import re
-map_file = MapData("elevation_small.txt").read_file()
-# print(max(map_file))
-total_diff = stats(map_file)
-ele_range = total_diff.get_range()
+# map_file = MapData("elevation_small.txt").read_file()
+# # print(max(map_file))
+# total_diff = stats(map_file)
+# ele_range = total_diff.get_range()
 # print(ele_range)
 # print(min(map_file))
+
+
 map_lines_file = MapData("elevation_large.txt").readlines_file()
+
 # print(len(map_lines_file))
 
-fill_value_list = []
-for line in map_lines_file:
-    fill_value_line = []
-    for _value in line:
-        fill_value_line.append(_value - 3139)
-    fill_value_list.append(fill_value_line)
 
 
-divided_list = []
-for line in fill_value_list:
-    divided_line = []
-    for _value in line:
-        # breakpoint()
-        divided_line.append(int((_value / 2509)*255))
-    divided_list.append(divided_line)
+# fill_value_list = []
+# for line in map_lines_file:
+#     fill_value_line = []
+#     for _value in line:
+#         fill_value_line.append(_value - 3139)
+#     fill_value_list.append(fill_value_line)
+
+
+# divided_list = []
+# for line in fill_value_list:
+#     divided_line = []
+#     for _value in line:
+#         # breakpoint()
+#         divided_line.append(int((_value / 2509)*255))
+#     divided_list.append(divided_line)
 
 # print(divided_list)
 
@@ -39,6 +44,8 @@ for line in fill_value_list:
 # # print(max(max_list))
 # # print(min(min_list))
 
+# cooler way to find min or max in list of lists, don't need to make it one file or do for loops, add this version to
+# min([min(row) for row in self.elevations])
 
 # _int = 4561
 # print(((_int - min(map_file))//(ele_range/256)))
@@ -76,37 +83,65 @@ for line in fill_value_list:
 # print("done")
 
 
+# # this one _______
 
+# blank_map = Image.new('RGB', (600, 600), 'white')
+# blank_map.save('test_map.png')
+# draw_test = ImageDraw.Draw(blank_map)
+# y = 0
+# for line in divided_list:
+#     x = 0
+#     for _int in line: 
+#         draw_test.point((x,y),fill=(_int))
+#         x += 1
+#     y += 1
 
-blank_map = Image.new('RGB', (600, 600), 'white')
-blank_map.save('test_map.png')
-draw_test = ImageDraw.Draw(blank_map)
-y = 0
-for line in divided_list:
-    x = 0
-    for _int in line:
-       
-        draw_test.point((x,y),fill=(_int))
-        x += 1
-    y += 1
-# breakpoint()
+# # ________________
+# # breakpoint()
 
-a = 0
-b = 300
-for a in range(600):
-    empty_list = []
-    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b-1]))
-    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b]))
-    empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b+1]))
-    if empty_list.index(min(empty_list)) == 0:
-        b += 1
-    if empty_list.index(min(empty_list)) == 2:
-        b -= 1
-    draw_test.point((a,b),fill=(0,255,255))
+# # a = 0
+# # b = 200
+# # total_elevation_change = 0
+# # for a in range(600):
+# #     empty_list = []
+# #     empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b-1]))
+# #     empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b]))
+# #     empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b+1]))
+# #     if empty_list.index(min(empty_list)) == 0:
+# #         b += 1
+# #         total_elevation_change += empty_list[0]
+# #     if empty_list.index(min(empty_list)) == 1:
+# #         total_elevation_change += empty_list[1]
+# #     if empty_list.index(min(empty_list)) == 2:
+# #         b -= 1
+# #         total_elevation_change += empty_list[2]
+# #     draw_test.point((a,b),fill=(0,255,255))
     
+# list_of_ele_changes = []
+# for b in range(600):    
+#     a = 0
+#     total_elevation_change = 0
+#     for a in range(600):
+#         empty_list = []
+#         empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b-1]))
+#         empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b]))
+#         empty_list.append(abs(divided_list[a][b] - divided_list[a+1][b+1]))
+#         if empty_list.index(min(empty_list)) == 0:
+#             b += 1
+#             total_elevation_change += empty_list[0]
+#         if empty_list.index(min(empty_list)) == 1:
+#             total_elevation_change += empty_list[1]
+#         if empty_list.index(min(empty_list)) == 2:
+#             b -= 1
+#             total_elevation_change += empty_list[2]
+#         draw_test.point((a,b),fill=(0,255,255))
+#     list_of_ele_changes.append(total_elevation_change)
 
-blank_map.show()
-print("done")
+# blank_map.show()
+# best_path = list_of_ele_changes.index(min(list_of_ele_changes))
+# print (best_path, list_of_ele_changes[best_path])
+# # print(f"your total elevation change was {total_elevation_change} meters. Tired yet?")
+# print("done")
 
 
 
